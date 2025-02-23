@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pick Your Trip!</title>
+    <title>Pick Your Melbourne Flight! ✈️</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -12,6 +12,14 @@
         }
         h1 {
             color: #333;
+        }
+        .date-selection {
+            margin: 20px;
+        }
+        input {
+            padding: 8px;
+            margin: 5px;
+            font-size: 1em;
         }
         .options {
             display: flex;
@@ -53,8 +61,16 @@
 </head>
 <body>
 
-    <h1>Pick Your Travel Option ✈️</h1>
-    <p>Click on the flight you want to take:</p>
+    <h1>Pick Your Flight to Melbourne! 🇦🇺</h1>
+
+    <div class="date-selection">
+        <label for="start-date">Start Date:</label>
+        <input type="date" id="start-date">
+        <label for="end-date">End Date:</label>
+        <input type="date" id="end-date">
+    </div>
+
+    <p>Click on a flight option:</p>
 
     <div class="options" id="options">
         <!-- Images will be added dynamically -->
@@ -65,9 +81,9 @@
 
     <script>
         const options = [
-            { src: "flight1.jpg", name: "Flight to Paris 🇫🇷" },
-            { src: "flight2.jpg", name: "Flight to Tokyo 🇯🇵" },
-            { src: "flight3.jpg", name: "Flight to Hawaii 🌴" }
+            { src: "https://github.com/bspeh/pick-your-trip/blob/312f71079fc7c96c9d0922e3a4c1d5fb0b623ed4/1.png", name: "Flight 1 to Melbourne" },
+            { src: "https://github.com/bspeh/pick-your-trip/blob/312f71079fc7c96c9d0922e3a4c1d5fb0b623ed4/2.png", name: "Flight 2 to Melbourne" },
+            { src: "https://github.com/bspeh/pick-your-trip/blob/312f71079fc7c96c9d0922e3a4c1d5fb0b623ed4/3.png", name: "Flight 3 to Melbourne" }
         ];
 
         const container = document.getElementById("options");
@@ -94,7 +110,15 @@
         }
 
         function confirmChoice() {
-            alert("Yay! You chose: " + selectedOption);
+            const startDate = document.getElementById("start-date").value;
+            const endDate = document.getElementById("end-date").value;
+
+            if (!startDate || !endDate) {
+                alert("Please select a date range before confirming!");
+                return;
+            }
+
+            alert(`Yay! You chose: ${selectedOption} for ${startDate} - ${endDate}`);
         }
     </script>
 
