@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pick Your Melbourne Flight! ✈️</title>
+    <title>Pick Your Flight to Melbourne! ✈️</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -13,42 +13,23 @@
         h1 {
             color: #333;
         }
-        .date-selection {
-            margin: 20px;
-        }
-        input {
-            padding: 8px;
-            margin: 5px;
-            font-size: 1em;
-        }
-        .options {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 15px;
+        .container {
             margin-top: 20px;
-        }
-        .option {
-            border: 3px solid transparent;
-            cursor: pointer;
-            transition: 0.3s;
         }
         .option img {
-            width: 300px;
+            width: 350px;
             height: auto;
             border-radius: 10px;
+            border: 3px solid transparent;
+            transition: 0.3s;
         }
-        .option:hover {
+        .option img:hover {
             border-color: #ff6347;
         }
-        #selected {
+        .controls {
             margin-top: 20px;
-            font-size: 1.2em;
-            color: #008000;
         }
-        #confirm {
-            display: none;
-            margin-top: 20px;
+        button {
             padding: 10px 20px;
             font-size: 1.1em;
             background-color: #ff6347;
@@ -56,6 +37,11 @@
             border: none;
             border-radius: 5px;
             cursor: pointer;
+            margin: 5px;
+        }
+        button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
         }
     </style>
 </head>
@@ -63,63 +49,57 @@
 
     <h1>Pick Your Flight to Melbourne! 🇦🇺</h1>
 
-    <div class="date-selection">
-        <label for="start-date">Start Date:</label>
-        <input type="date" id="start-date">
-        <label for="end-date">End Date:</label>
-        <input type="date" id="end-date">
+    <div class="container">
+        <div class="option">
+            <img id="flight-img" src="" alt="Flight Option">
+            <p id="flight-name"></p>
+        </div>
     </div>
 
-    <p>Click on a flight option:</p>
-
-    <div class="options" id="options">
-        <!-- Images will be added dynamically -->
+    <div class="controls">
+        <button id="prev" onclick="prevFlight()" disabled>⬅ Previous</button>
+        <button id="next" onclick="nextFlight()">Next ➡</button>
     </div>
 
-    <p id="selected"></p>
-    <button id="confirm" onclick="confirmChoice()">Confirm Choice</button>
+    <button id="confirm" onclick="confirmChoice()" style="display: none;">Confirm Choice</button>
 
     <script>
         const options = [
-            { src: "https://github.com/bspeh/pick-your-trip/blob/312f71079fc7c96c9d0922e3a4c1d5fb0b623ed4/1.png", name: "Flight 1 to Melbourne" },
-            { src: "https://github.com/bspeh/pick-your-trip/blob/312f71079fc7c96c9d0922e3a4c1d5fb0b623ed4/2.png", name: "Flight 2 to Melbourne" },
-            { src: "https://github.com/bspeh/pick-your-trip/blob/312f71079fc7c96c9d0922e3a4c1d5fb0b623ed4/3.png", name: "Flight 3 to Melbourne" }
+            { src: "https://raw.githubusercontent.com/bspeh/pick-your-trip/main/1.png", name: "Flight 1 to Melbourne" },
+            { src: "https://raw.githubusercontent.com/bspeh/pick-your-trip/main/2.png", name: "Flight 2 to Melbourne" },
+            { src: "https://raw.githubusercontent.com/bspeh/pick-your-trip/main/3.png", name: "Flight 3 to Melbourne" }
         ];
 
-        const container = document.getElementById("options");
-        let selectedOption = "";
+        let currentIndex = 0;
 
-        options.forEach(option => {
-            const div = document.createElement("div");
-            div.classList.add("option");
-
-            const img = document.createElement("img");
-            img.src = option.src;
-            img.alt = option.name;
-
-            div.appendChild(img);
-            div.onclick = () => selectOption(option.name);
-
-            container.appendChild(div);
-        });
-
-        function selectOption(name) {
-            selectedOption = name;
-            document.getElementById("selected").textContent = "You selected: " + name;
+        function updateFlight() {
+            document.getElementById("flight-img").src = options[currentIndex].src;
+            document.getElementById("flight-name").textContent = options[currentIndex].name;
+            document.getElementById("prev").disabled = currentIndex === 0;
+            document.getElementById("next").disabled = currentIndex === options.length - 1;
             document.getElementById("confirm").style.display = "inline-block";
         }
 
-        function confirmChoice() {
-            const startDate = document.getElementById("start-date").value;
-            const endDate = document.getElementById("end-date").value;
-
-            if (!startDate || !endDate) {
-                alert("Please select a date range before confirming!");
-                return;
+        function prevFlight() {
+            if (currentIndex > 0) {
+                currentIndex--;
+                updateFlight();
             }
-
-            alert(`Yay! You chose: ${selectedOption} for ${startDate} - ${endDate}`);
         }
+
+        function nextFlight() {
+            if (currentIndex < options.length - 1) {
+                currentIndex++;
+                updateFlight();
+            }
+        }
+
+        function confirmChoice() {
+            alert("You selected: " + options[currentIndex].name);
+        }
+
+        // Initialize first flight
+        updateFlight();
     </script>
 
 </body>
