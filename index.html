@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pick Your Trip!</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f5f5f5;
+        }
+        h1 {
+            color: #333;
+        }
+        .options {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .option {
+            border: 3px solid transparent;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .option img {
+            width: 300px;
+            height: auto;
+            border-radius: 10px;
+        }
+        .option:hover {
+            border-color: #ff6347;
+        }
+        #selected {
+            margin-top: 20px;
+            font-size: 1.2em;
+            color: #008000;
+        }
+        #confirm {
+            display: none;
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 1.1em;
+            background-color: #ff6347;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Pick Your Travel Option ✈️</h1>
+    <p>Click on the flight you want to take:</p>
+
+    <div class="options" id="options">
+        <!-- Images will be added dynamically -->
+    </div>
+
+    <p id="selected"></p>
+    <button id="confirm" onclick="confirmChoice()">Confirm Choice</button>
+
+    <script>
+        const options = [
+            { src: "flight1.jpg", name: "Flight to Paris 🇫🇷" },
+            { src: "flight2.jpg", name: "Flight to Tokyo 🇯🇵" },
+            { src: "flight3.jpg", name: "Flight to Hawaii 🌴" }
+        ];
+
+        const container = document.getElementById("options");
+        let selectedOption = "";
+
+        options.forEach(option => {
+            const div = document.createElement("div");
+            div.classList.add("option");
+
+            const img = document.createElement("img");
+            img.src = option.src;
+            img.alt = option.name;
+
+            div.appendChild(img);
+            div.onclick = () => selectOption(option.name);
+
+            container.appendChild(div);
+        });
+
+        function selectOption(name) {
+            selectedOption = name;
+            document.getElementById("selected").textContent = "You selected: " + name;
+            document.getElementById("confirm").style.display = "inline-block";
+        }
+
+        function confirmChoice() {
+            alert("Yay! You chose: " + selectedOption);
+        }
+    </script>
+
+</body>
+</html>
