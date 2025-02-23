@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pick Your Flight to Melbourne! ✈️</title>
+    <title>Mein Flug nach Melbourne ✈️</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -54,11 +54,34 @@
             left: 0;
             pointer-events: none;
         }
+        .modal {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 20px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            display: none;
+        }
+        .modal button {
+            background-color: red;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
-    <h1>Pick Your Flight to Melbourne! 🇦🇺</h1>
+    <h1>This could be us soon ;)) If you want this klick next <3 🇦🇺</h1>
     
+    <div class="modal" id="modal">
+        <p>Hier darfst du deinen favourite auswählen ;)) </p>
+        <button onclick="closeModal()">X</button>
+    </div>
+
     <div class="container">
         <div class="option">
             <img id="flight-img" src="" alt="Flight Option">
@@ -73,7 +96,7 @@
 
     <button id="confirm" onclick="confirmChoice()" style="display: none;">Confirm Choice</button>
     
-    <div class="confirmation" id="confirmation-message">AMAZING CHOICE YOU TOOK RIGHT THERE!!! 🎉</div>
+    <div class="confirmation" id="confirmation-message">AMAZING CHOICE YOU TOOK RIGHT THERE!!! 🎉 BALD BIN ICH DAAAA BABE</div>
     <canvas class="confetti" id="confetti"></canvas>
 
     <script>
@@ -153,6 +176,12 @@
             }
             animate();
         }
+
+        function closeModal() {
+            document.getElementById("modal").style.display = "none";
+        }
+
+        document.getElementById("modal").style.display = "block";
 
         // Initialize first flight
         updateFlight();
